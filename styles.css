@@ -32,12 +32,29 @@ display: flex;
 justify-content: space-between;
 }
 
+#equations-block {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 365px;
+}
 #last-equation {
     width: 160px;
-    height: 30px;
-    margin-left: 5px;
+    height: 20px;
+    margin-left: 16px;
+    margin-top: 5px;
+    color:rgb(120, 120, 120);
     background-color: rgba(0, 0, 0, 0); /*try to delete later */
 }
+#current-equation {
+    margin-left: 10px;
+    font-size: 40px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+
 
 #backspace {
     margin-right: 10px;
