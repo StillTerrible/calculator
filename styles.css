@@ -1,0 +1,105 @@
+body {
+    font-family: 'Inter';
+}
+
+
+/* colors */
+.cream {
+    background-color: #EEE2DE;
+}
+
+.orange{
+    background-color: #EA906C;
+}
+
+#main {
+    height: 725px;
+    width: 475px;
+    background-color: #2D2C50;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* first block */
+#output-block {
+height: 100px;
+width: 420px;
+border-radius: 9px;
+margin-top: 25px;
+display: flex;
+justify-content: space-between;
+}
+
+#last-equation {
+    width: 160px;
+    height: 30px;
+    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0); /*try to delete later */
+}
+
+#backspace {
+    margin-right: 10px;
+    border: 0px;
+    background-color: rgba(0, 0, 0, 0); /*try to delete later */
+    align-self: center;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 45px 0px 0px 45px;
+
+}
+#backspace img {
+    width: 45px;
+}
+
+/* second block */
+#buttons-block {
+margin-top: 45px;
+height: 420px;
+width: 420px;
+
+display: flex;
+flex-wrap: wrap;
+gap: 22.66px;
+}
+
+.button, #equal{
+    font-family:'Inter';
+}
+
+.button {
+    width: 88px;
+    height: 88px;
+    border-radius: 45px;
+    font-size: 32px;
+    padding: 0;
+
+    border: none;
+    box-shadow: inset 0 5px 3px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+/* equal button */
+#equal {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    height: 88px;
+    width: 198.66px;
+    border-radius: 45px;
+    padding: 0px;
+    border: 0px;
+    box-shadow: inset 0 5px 3px rgba(0, 0, 0, 0.3);
+}
+
+#equal div {
+    height: 105px;
+    font-size: 90px;
+    font-weight: 100;
+}
