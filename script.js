@@ -75,6 +75,7 @@ const lastEquation = document.querySelector('#last-equation');
 
 const numberButtonsNodes = document.querySelectorAll('.number-button');
 const operatorButtonsNodes = document.querySelectorAll('.operator-button');
+const zeroButton = document.querySelector('.zero-button');
 const rootButton = document.querySelector('.root-button');
 const dotButton = document.querySelector('.dot-button');
 const clearButton = document.querySelector('#clear');
@@ -86,7 +87,8 @@ let operateAnswer;
 // assigning events to buttons
 for (let i = 0; i < numberButtonsNodes.length; i++){
 numberButtonsNodes[i].addEventListener('click', () => {
-        if (currentEquation.textContent.length < 23) {
+        if (currentEquation.textContent.length < 23 &&
+            currentEquation.textContent !== '0') {
             currentEquation.textContent += numberButtonsNodes[i].id;
         }
     });
@@ -102,6 +104,13 @@ for (let i = 0; i < operatorButtonsNodes.length; i++){
         }
     });
 }
+
+zeroButton.addEventListener('click', () => {
+    if (currentEquation.textContent.length < 23 &&
+        currentEquation.textContent !== '0') {
+        currentEquation.textContent += zeroButton.id;
+    }
+})
 
 rootButton.addEventListener('click', () => {
     if (currentEquation.textContent.length < 22 &&
@@ -143,7 +152,7 @@ equalButton.addEventListener('click', () => {
         lastEquation.textContent = (currentEquation.textContent);
         operateAnswer = operate(+arr[0], arr[1], +arr[2]);
         currentEquation.textContent = fixLength(operateAnswer);
-        lastEquation.textContent += ('=' + fixLength(operateAnswer))
+        lastEquation.textContent += (' = ' + fixLength(operateAnswer))
     }
 
     //if ()
