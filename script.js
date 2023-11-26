@@ -48,17 +48,17 @@ switch(operator) {
 }
 
 function splitEquation(equation) {
-    if (equation.textContent.search(/-/) != 0 ) {
-    let arr = equation.textContent.split(/[+\-x÷^]/);
-    arr.splice(1, 0, equation.textContent[equation.textContent.search(/[+\-x÷^]/)]);
+    if (equation.search(/-/) != 0 ) {
+    let arr = equation.split(/[+\-x÷\^]/);
+    arr.splice(1, 0, equation[equation.search(/[+\-x÷\^]/)]);
     return arr;
     }
     else {
-        let tempArr = equation.textContent.split('');
+        let tempArr = equation.split('');
         tempArr.splice(0,1);
         let equationHolder = tempArr.join('');
-        let arr = equationHolder.split(/[+\-x÷^]/);
-        arr.splice(1, 0, equationHolder[equationHolder.search(/[+\-x÷^]/)]);
+        let arr = equationHolder.split(/[+\-x÷\^]/);
+        arr.splice(1, 0, equationHolder[equationHolder.search(/[+\-x÷\^]/)]);
         arr[0] = '-' + arr[0]
         return arr;
     }
@@ -67,6 +67,30 @@ function splitEquation(equation) {
 function fixLength(answer) {
     answer = Math.round(answer * 1000) /1000
     return answer;
+}
+
+function zeroCheck(equation) {
+    let arr = equation.match(/(\+0+)?(-0+)?(x0+)?(÷0+)?(\^0+)?/g)
+    return arr.some( (value) => {return value !== ''})
+}
+
+function operatorButtonEqual(buttonId) {
+    let arr = splitEquation(currentEquation.textContent);
+    if (arr[1] === "÷" && arr[2] === '0') {
+        if (arr[0] === '0') {
+            currentEquation.textContent = '';
+            lastEquation.textContent = 'bruh';
+        }
+        else {
+            currentEquation.textContent = '';
+            lastEquation.textContent = 'nope';
+        }
+    }
+    else if (arr.every(currentValue => {return (currentValue != '' && currentValue != undefined)})) {
+        lastEquation.textContent = currentEquation.textContent;
+        operateAnswer = operate(+arr[0], arr[1], +arr[2]);
+        currentEquation.textContent = fixLength(operateAnswer) + buttonId;
+    }
 }
 
 
@@ -82,13 +106,14 @@ const clearButton = document.querySelector('#clear');
 const backspace = document.querySelector('#backspace');
 const equalButton = document.querySelector('#equal');
 
-let operateAnswer;
+let operateAnswer = 0;
 
 // assigning events to buttons
 for (let i = 0; i < numberButtonsNodes.length; i++){
 numberButtonsNodes[i].addEventListener('click', () => {
         if (currentEquation.textContent.length < 23 &&
-            currentEquation.textContent !== '0') {
+            currentEquation.textContent !== '0' &&
+            zeroCheck(currentEquation.textContent) === false) {
             currentEquation.textContent += numberButtonsNodes[i].id;
         }
     });
@@ -96,9 +121,16 @@ numberButtonsNodes[i].addEventListener('click', () => {
 
 for (let i = 0; i < operatorButtonsNodes.length; i++){
     operatorButtonsNodes[i].addEventListener('click', () => {
-        if (currentEquation.textContent.length < 22 &&
+
+        let arr = splitEquation(currentEquation.textContent);
+
+        if (arr.every(currentValue => {return (currentValue != '' && currentValue != undefined)}))
+        {
+            operatorButtonEqual(operatorButtonsNodes[i].id)
+        }
+        else if (currentEquation.textContent.length < 22 &&
             currentEquation.textContent.length > 0 &&
-            (currentEquation.textContent.search(/[+\-x÷^]/) === -1 || currentEquation.textContent === operateAnswer.toString())
+            (currentEquation.textContent.search(/[+\-x÷\^]/) === -1 || currentEquation.textContent === operateAnswer.toString())
             ) {
             currentEquation.textContent += operatorButtonsNodes[i].id;
         }
@@ -107,7 +139,8 @@ for (let i = 0; i < operatorButtonsNodes.length; i++){
 
 zeroButton.addEventListener('click', () => {
     if (currentEquation.textContent.length < 23 &&
-        currentEquation.textContent !== '0') {
+        currentEquation.textContent !== '0' &&
+        zeroCheck(currentEquation.textContent) === false) {
         currentEquation.textContent += zeroButton.id;
     }
 })
@@ -115,7 +148,7 @@ zeroButton.addEventListener('click', () => {
 rootButton.addEventListener('click', () => {
     if (currentEquation.textContent.length < 22 &&
         currentEquation.textContent.length > 0 &&
-        currentEquation.textContent.search(/[+\-x÷^]/) === -1
+        currentEquation.textContent.search(/[+\-x÷\^]/) === -1
         ) {
         currentEquation.textContent += '^0.5';
     }
@@ -147,15 +180,22 @@ backspace.addEventListener('click', () => {
 });
 
 equalButton.addEventListener('click', () => {
-    let arr = splitEquation(currentEquation);
-    if (arr.every(currentValue => {return (currentValue != '' && currentValue != undefined)})) {
-        lastEquation.textContent = (currentEquation.textContent);
+    let arr = splitEquation(currentEquation.textContent);
+    if (arr[1] === "÷" && arr[2] === '0') {
+        if (arr[0] === '0') {
+            currentEquation.textContent = '';
+            lastEquation.textContent = 'bruh';
+        }
+        else {
+            currentEquation.textContent = '';
+            lastEquation.textContent = 'nope';
+        }
+    }
+    else if (arr.every(currentValue => {return (currentValue != '' && currentValue != undefined)})) {
+        lastEquation.textContent = currentEquation.textContent;
         operateAnswer = operate(+arr[0], arr[1], +arr[2]);
         currentEquation.textContent = fixLength(operateAnswer);
-        lastEquation.textContent += (' = ' + fixLength(operateAnswer))
     }
-
-    //if ()
 })
 
 
