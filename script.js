@@ -100,7 +100,6 @@ const lastEquation = document.querySelector('#last-equation');
 const numberButtonsNodes = document.querySelectorAll('.number-button');
 const operatorButtonsNodes = document.querySelectorAll('.operator-button');
 const zeroButton = document.querySelector('.zero-button');
-const rootButton = document.querySelector('.root-button');
 const dotButton = document.querySelector('.dot-button');
 const clearButton = document.querySelector('#clear');
 const backspace = document.querySelector('#backspace');
@@ -144,15 +143,6 @@ zeroButton.addEventListener('click', () => {
         currentEquation.textContent += zeroButton.id;
     }
 })
-
-rootButton.addEventListener('click', () => {
-    if (currentEquation.textContent.length < 22 &&
-        currentEquation.textContent.length > 0 &&
-        currentEquation.textContent.search(/[+\-x÷\^]/) === -1
-        ) {
-        currentEquation.textContent += '^0.5';
-    }
-});
 
 dotButton.addEventListener('click', () => {
     if (currentEquation.textContent.length < 22 &&
