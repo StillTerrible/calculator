@@ -1,5 +1,8 @@
 body {
     font-family: 'Inter';
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
