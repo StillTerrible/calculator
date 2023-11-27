@@ -70,8 +70,13 @@ function fixLength(answer) {
 }
 
 function zeroCheck(equation) {
+    if (equation.charAt(equation.length-1) !== '.') {
     let arr = equation.match(/(\+0+)?(-0+)?(x0+)?(÷0+)?(\^0+)?/g)
     return arr.some( (value) => {return value !== ''})
+    }
+    else {
+        return false;
+    }
 }
 
 function operatorButtonEqual(buttonId) {
@@ -92,7 +97,6 @@ function operatorButtonEqual(buttonId) {
         currentEquation.textContent = fixLength(operateAnswer) + buttonId;
     }
 }
-
 
 const currentEquation = document.querySelector('#current-equation');
 const lastEquation = document.querySelector('#last-equation');
@@ -170,16 +174,22 @@ backspace.addEventListener('click', () => {
 });
 
 equalButton.addEventListener('click', () => {
+    if (currentEquation.textContent === '80085') lastEquation.textContent = 'dQw4w9WgXcQ';
+
     let arr = splitEquation(currentEquation.textContent);
     if (arr[1] === "÷" && arr[2] === '0') {
         if (arr[0] === '0') {
             currentEquation.textContent = '';
-            lastEquation.textContent = 'bruh';
+            lastEquation.textContent = 'John Deez, The CEO Of Division';
         }
         else {
             currentEquation.textContent = '';
             lastEquation.textContent = 'nope';
         }
+    }
+    else if (arr[1] === '^' && arr[2].includes('0.') === true) {
+        currentEquation.textContent = '';
+            lastEquation.textContent = 'nah';
     }
     else if (arr.every(currentValue => {return (currentValue != '' && currentValue != undefined)})) {
         lastEquation.textContent = currentEquation.textContent;
